@@ -177,7 +177,58 @@ const trsHistoryByPoste = async (req, res) => {
     res.json({ error: error.message });
   }
 };
+const tempsEfficientGlobal = async (req, res) => {
+  try {
+    let { startDate, endDate } = req.body;
+    const [results, metadata] = await prodDb.query(
+      `SELECT MONTH(Date_prod) as 'mois', SUM(Temps_efficient) as 'total_temps_efficient' FROM prod WHERE Date_prod >= '${startDate}' AND Date_prod <='${endDate}' AND Poste_charge in (${postCharge}) GROUP BY MONTH(Date_prod) `
+    );
+    let months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    let mainDisplay = months.map((mnth) => {
+      let month = results.find((elm) => elm.mois == mnth);
+      if (month) {
+        return month;
+      } else {
+        return {
+          mois: mnth,
+          total_temps_efficient: 0,
+        };
+      }
+    });
+    let finalResult = mainDisplay.map((elm) => {
+      return { ...elm, mois: displayMonthName(elm.mois) };
+    });
 
+    res.json({ result: finalResult });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
+const OtdCount = async (req, res) => {
+  try {
+    let [result, metadata] = await prodDb.query(
+      `SELECT COUNT(livraison.ligne_cde) AS "nbr" ,MONTH(livraison.Date_livraison) AS "mois" FROM livraison WHERE livraison.J0=1 GROUP BY MONTH(livraison.Date_livraison)`
+    );
+    let months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    let mainDisplay = months.map((mnth) => {
+      let month = result.find((elm) => elm.mois == mnth);
+      if (month) {
+        return month;
+      } else {
+        return {
+          mois: mnth,
+          nbr: 0,
+        };
+      }
+    });
+    let finalResult = mainDisplay.map((elm) => {
+      return { ...elm, mois: displayMonthName(elm.mois) };
+    });
+    res.json({ result: finalResult });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
 module.exports = {
   initProdList,
   trsCalculByDay,
@@ -187,4 +238,6 @@ module.exports = {
   trsHistoryByPoste,
   trsGlobal,
   tauxRebusDay,
+  tempsEfficientGlobal,
+  OtdCount,
 };
