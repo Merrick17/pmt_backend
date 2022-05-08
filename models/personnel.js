@@ -306,6 +306,11 @@ module.exports = function(sequelize, DataTypes) {
     PASSWD: {
       type: DataTypes.STRING(500),
       allowNull: true
+    },
+    SERVICE: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      defaultValue: "PRODUCTION"
     }
   }, {
     sequelize,

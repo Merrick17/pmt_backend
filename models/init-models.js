@@ -1,8 +1,10 @@
 var DataTypes = require("sequelize").DataTypes;
 var _action_correction = require("./action_correction");
 var _action_immediat = require("./action_immediat");
+var _alert_error = require("./alert_error");
 var _audit = require("./audit");
 var _cause = require("./cause");
+var _connected_device = require("./connected_device");
 var _details_tache = require("./details_tache");
 var _livraison = require("./livraison");
 var _mytable = require("./mytable");
@@ -17,8 +19,10 @@ var _suivis = require("./suivis");
 function initModels(sequelize) {
   var action_correction = _action_correction(sequelize, DataTypes);
   var action_immediat = _action_immediat(sequelize, DataTypes);
+  var alert_error = _alert_error(sequelize, DataTypes);
   var audit = _audit(sequelize, DataTypes);
   var cause = _cause(sequelize, DataTypes);
+  var connected_device = _connected_device(sequelize, DataTypes);
   var details_tache = _details_tache(sequelize, DataTypes);
   var livraison = _livraison(sequelize, DataTypes);
   var mytable = _mytable(sequelize, DataTypes);
@@ -40,8 +44,10 @@ function initModels(sequelize) {
   return {
     action_correction,
     action_immediat,
+    alert_error,
     audit,
     cause,
+    connected_device,
     details_tache,
     livraison,
     mytable,

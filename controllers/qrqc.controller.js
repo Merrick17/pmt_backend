@@ -54,6 +54,25 @@ const addNewQrQc = async (req, res) => {
   }
 };
 
+const deleteQrQc = async (req, res) => {
+  let { id } = req.params;
+  try {
+    let result = await dbOrm.qrqc.destroy({
+      where: { id_qrqc: id },
+    });
+    res.json({
+      success: true,
+      message: "QRQC Supprimer",
+      result: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const addewActionCorrect = async (req, res) => {
   try {
     let {
@@ -178,4 +197,5 @@ module.exports = {
   addNewCause,
   getQRQCInfo,
   getQRQCInfoById,
+  deleteQrQc,
 };

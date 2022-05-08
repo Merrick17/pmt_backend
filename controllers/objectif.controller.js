@@ -22,9 +22,19 @@ const addNewObjectif = async (req, res) => {
 const getAllObjectif = async (req, res) => {
   try {
     let result = await dbOrm.objectif.findAll({});
+    // res.json({
+    //   success: true,
+    //   result: result,
+    // });
+    let users = await dbOrm.personnel.findAll({});
+    //console.log("Users", users);
+    let elements = result.map((elm) => {
+      let resp = users.find((usr) => usr.MATRIC == elm.Matricule_responsable);
+      return { ...elm, resp: `${resp.NOMPER} ${resp.PRENOM}` };
+    });
     res.json({
       success: true,
-      result: result,
+      result: elements,
     });
   } catch (error) {
     res.json({
