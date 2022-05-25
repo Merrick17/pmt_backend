@@ -90,12 +90,25 @@ const tauxRebusMonth = async (req, res) => {
     const [results, metadata] = await prodDb.query(
       `SELECT Poste_charge, SUM(Qt_rebus) as 'Qte_rebus',SUM(Qt_faite) as 'Qte_faite' FROM prod WHERE Date_prod >= '${startDate}' AND Date_prod <='${endDate}' AND Poste_charge in (${postCharge}) GROUP BY Poste_charge `
     );
-    let finalResult = results.map((elm) => {
-      return { ...elm, tauxRebus: (elm.Qte_rebus / elm.Qte_faite) * 100 };
+
+    let finalResult = results.map(async (elm) => {
+      console.log("TRS", elm.Poste_charge);
+      let objc = await dbOrm.objectif.findOne({
+        where: {
+          Machine: elm.Poste_charge,
+        },
+      });
+      console.log("Obj", objc);
+      return {
+        ...elm,
+        tauxRebus: (elm.Qte_rebus / elm.Qte_faite) * 100,
+        objectif: objc,
+      };
     });
+    let mappedResult = await Promise.all(finalResult);
 
     res.json({
-      rebus: finalResult,
+      rebus: mappedResult,
     });
   } catch (error) {
     res.json({ error: error.message });
@@ -107,12 +120,24 @@ const tauxRebusDay = async (req, res) => {
     const [results, metadata] = await prodDb.query(
       `SELECT Poste_charge, SUM(Qt_rebus) as 'Qte_rebus',SUM(Qt_faite) as 'Qte_faite' FROM prod WHERE Date_prod = '${startDate}'  AND Poste_charge in (${postCharge}) GROUP BY Poste_charge `
     );
-    let finalResult = results.map((elm) => {
-      return { ...elm, tauxRebus: (elm.Qte_rebus / elm.Qte_faite) * 100 };
+    let finalResult = results.map(async (elm) => {
+      console.log("TRS", elm.Poste_charge);
+      let objc = await dbOrm.objectif.findOne({
+        where: {
+          Machine: elm.Poste_charge,
+        },
+      });
+      console.log("Obj", objc);
+      return {
+        ...elm,
+        tauxRebus: (elm.Qte_rebus / elm.Qte_faite) * 100,
+        objectif: objc,
+      };
     });
+    let mappedResult = await Promise.all(finalResult);
 
     res.json({
-      rebus: finalResult,
+      rebus: mappedResult,
     });
   } catch (error) {
     res.json({ error: error.message });
@@ -124,10 +149,22 @@ const trsCalculByWeek = async (req, res) => {
     const [results, metadata] = await prodDb.query(
       `SELECT Poste_charge , SUM(Temps_efficient) as 'total_temps_efficient' FROM prod WHERE Date_prod >= '${startDate}' AND Date_prod <='${endDate}' AND Poste_charge in (${postCharge}) GROUP BY Poste_charge `
     );
-    let finalResult = results.map((elm) => {
-      return { ...elm, trs: (elm.total_temps_efficient / (7 * 24)) * 100 };
+    let finalResult = results.map(async (elm) => {
+      console.log("TRS", elm.Poste_charge);
+      let objc = await dbOrm.objectif.findOne({
+        where: {
+          Machine: elm.Poste_charge,
+        },
+      });
+      console.log("Obj", objc);
+      return {
+        ...elm,
+        trs: (elm.total_temps_efficient / (7 * 24)) * 100,
+        objectif: objc,
+      };
     });
-    res.json({ trs: finalResult });
+    let mappedResult = await Promise.all(finalResult);
+    res.json({ trs: mappedResult });
   } catch (error) {
     res.json({ error: error.message });
   }
@@ -138,10 +175,23 @@ const trsCalculBylMonth = async (req, res) => {
     const [results, metadata] = await prodDb.query(
       `SELECT Poste_charge , SUM(Temps_efficient) as 'total_temps_efficient' FROM prod WHERE Date_prod >= '${startDate}' AND Date_prod <='${endDate}' AND Poste_charge in (${postCharge}) GROUP BY Poste_charge `
     );
-    let finalResult = results.map((elm) => {
-      return { ...elm, trs: (elm.total_temps_efficient / (30 * 24)) * 100 };
+
+    let finalResult = results.map(async (elm) => {
+      console.log("TRS", elm.Poste_charge);
+      let objc = await dbOrm.objectif.findOne({
+        where: {
+          Machine: elm.Poste_charge,
+        },
+      });
+      console.log("Obj", objc);
+      return {
+        ...elm,
+        trs: (elm.total_temps_efficient / (30 * 24)) * 100,
+        objectif: objc,
+      };
     });
-    res.json({ trs: finalResult });
+    let mappedResult = await Promise.all(finalResult);
+    res.json({ trs: mappedResult });
   } catch (error) {
     res.json({ error: error.message });
   }

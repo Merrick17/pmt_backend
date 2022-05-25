@@ -2,11 +2,12 @@ const { prodDb, dbOrm } = require("../config/initDb");
 
 const addNewObjectif = async (req, res) => {
   try {
-    let { Machine, Matricule_responsable, pourcentage } = req.body;
+    let { Machine, Matricule_responsable, pourcentage, type } = req.body;
     let result = await dbOrm.objectif.create({
       Machine,
       Matricule_responsable,
       pourcentage,
+      type,
     });
     res.json({
       success: true,
