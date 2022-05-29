@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const multer = require("multer");
-const path = require('path');
-const { parsePointage } = require("../controllers/utils.controller");
+const path = require("path");
+const {
+  parsePointage,
+  parsePerso,
+} = require("../controllers/utils.controller");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/");
@@ -15,6 +18,7 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
-router.post("/personnel", upload.single("personnel"), parsePointage);
+router.post("/personnel", upload.single("poinatge"), parsePointage);
+router.post("/pointage", upload.single("personnel"), parsePerso);
 
 module.exports = router;
