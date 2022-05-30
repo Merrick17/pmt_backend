@@ -6,9 +6,23 @@ const {
   getAlertsByReceiver,
   fixAlert,
 } = require("../controllers/alert.controller");
+const path = require("path");
 const router = express.Router();
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/");
+  },
 
-router.post("/add", addNewAlert);
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+const upload = multer({ storage: storage });
+router.post("/add", upload.single("image"), addNewAlert);
 router.get("/", getAllAlerts);
 router.get("/sender/:id", getAlertsBySender);
 router.get("/receiver/:id", getAlertsByReceiver);

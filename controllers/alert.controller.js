@@ -3,6 +3,7 @@ const { sendNotifCation } = require("../config/notif");
 
 const addNewAlert = async (req, res) => {
   try {
+    let image = req.file.path;
     let { sender_id, receiver_id, description, title } = req.body;
     let result = await dbOrm.alert_error.create({
       sender_mat: sender_id,
@@ -10,6 +11,7 @@ const addNewAlert = async (req, res) => {
       description: description,
       status: "EN COURS",
       title: title,
+      image: image,
     });
     let device = await dbOrm.connected_device.findOne({
       where: {
