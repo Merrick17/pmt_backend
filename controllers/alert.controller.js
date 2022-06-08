@@ -20,7 +20,7 @@ const addNewAlert = async (req, res) => {
     });
     if (device) {
       let sent = await sendNotifCation(device.device_token, title, description);
-      // console.log("Sent", sent);
+      console.log("Sent", sent);
     }
 
     res.json({
