@@ -4,6 +4,7 @@ const { initializeApp, applicationDefault } = require("firebase-admin/app");
 const admin = require("firebase-admin")
 const serviceAccount = require("./config/pmt-app-275be-firebase-adminsdk-47ivi-fe360723d9.json");
 const app = express();
+const path = require("path");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 initializeApp({
@@ -27,6 +28,7 @@ app.use("/upload", uploadRoutes);
 app.use("/objectif", objectifRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/alerts", alertRoutes);
+app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 const port = process.env.PORT || 3500;
 
 app.listen(port, () => {
