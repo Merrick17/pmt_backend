@@ -99,7 +99,7 @@ const updateDetails = async (req, res) => {
   try {
     let dataToUpdate = req.body;
     let { id } = req.params;
-    let result = await dbOrm.details_tache.create(
+    let result = await dbOrm.details_tache.update(
       {
         ...dataToUpdate,
       },
