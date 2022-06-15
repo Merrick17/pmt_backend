@@ -44,3 +44,29 @@ describe("Audit Endpoints", () => {
     expect(res.body).toHaveProperty("result");
   });
 });
+describe("Audit Endpoints", () => {
+  it("GET /taks should show all audit", async () => {
+    const res = await requestWithSupertest.get("/tasks");
+    expect(res.status).toEqual(200);
+    expect(res.type).toEqual(expect.stringContaining("json"));
+    expect(res.body).toHaveProperty("result");
+  });
+  it("GET /alerts should show all alerts", async () => {
+    const res = await requestWithSupertest.get("/alerts");
+    expect(res.status).toEqual(200);
+    expect(res.type).toEqual(expect.stringContaining("json"));
+    expect(res.body).toHaveProperty("result");
+  });
+  it("GET /alerts should show all alerts by sender", async () => {
+    const res = await requestWithSupertest.get("/alerts/sender/73");
+    expect(res.status).toEqual(200);
+    expect(res.type).toEqual(expect.stringContaining("json"));
+    expect(res.body).toHaveProperty("result");
+  });
+  it("GET /alerts should show all alerts by receiver", async () => {
+    const res = await requestWithSupertest.get("/alerts/receiver/73");
+    expect(res.status).toEqual(200);
+    expect(res.type).toEqual(expect.stringContaining("json"));
+    expect(res.body).toHaveProperty("result");
+  });
+});

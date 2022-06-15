@@ -76,7 +76,7 @@ const parsePointage = async (req, res) => {
 const parsePerso = async (req, res) => {
   try {
     try {
-      let results = [];
+      // let results = [];
       let { path } = req.file;
       let listePersonnel = csvToJson.getJsonFromCsv(path);
       console.log("LISTE 1", listePersonnel[0].ANPASD.replace(",", "."));
