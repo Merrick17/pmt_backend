@@ -15,11 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     id_probleme: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
-      references: {
-        model: 'qrqc',
-        key: 'id_qrqc'
-      }
+      defaultValue: 0
     },
     qte_en_cours: {
       type: DataTypes.INTEGER,

@@ -36,8 +36,6 @@ function initModels(sequelize) {
 
   details_tache.belongsTo(audit, { as: "id_tache_audit", foreignKey: "id_tache"});
   audit.hasMany(details_tache, { as: "details_taches", foreignKey: "id_tache"});
-  action_immediat.belongsTo(qrqc, { as: "id_probleme_qrqc", foreignKey: "id_probleme"});
-  qrqc.hasMany(action_immediat, { as: "action_immediats", foreignKey: "id_probleme"});
 
   return {
     action_correction,
