@@ -10,11 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     id_probleme: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: 0,
-      references: {
-        model: 'qrqc',
-        key: 'id_qrqc'
-      }
+      defaultValue: 0
     },
     desc_action: {
       type: DataTypes.TEXT,

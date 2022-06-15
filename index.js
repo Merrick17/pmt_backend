@@ -1,7 +1,7 @@
 const express = require("express");
 const { initUsersPassword } = require("./controllers/users.controller");
 const { initializeApp, applicationDefault } = require("firebase-admin/app");
-const admin = require("firebase-admin")
+const admin = require("firebase-admin");
 const serviceAccount = require("./config/pmt-app-275be-firebase-adminsdk-47ivi-fe360723d9.json");
 const app = express();
 const path = require("path");
@@ -34,4 +34,5 @@ const port = process.env.PORT || 3500;
 app.listen(port, () => {
   console.log("App is running..");
 });
+module.exports = app;
 //initUsersPassword();
