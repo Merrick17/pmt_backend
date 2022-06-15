@@ -20,6 +20,11 @@ module.exports = function(sequelize, DataTypes) {
     pourcentage: {
       type: DataTypes.FLOAT,
       allowNull: true
+    },
+    TYPE: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      defaultValue: "REBUS"
     }
   }, {
     sequelize,
