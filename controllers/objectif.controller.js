@@ -7,7 +7,7 @@ const addNewObjectif = async (req, res) => {
       Machine,
       Matricule_responsable,
       pourcentage,
-      type,
+      TYPE: type,
     });
     res.json({
       success: true,
